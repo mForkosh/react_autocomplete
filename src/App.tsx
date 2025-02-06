@@ -1,7 +1,7 @@
 import './App.scss';
 import { peopleFromServer } from './data/people';
 import { Autocomplete } from './components/Autocomplete';
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { Person } from './types/Person';
 
@@ -9,6 +9,7 @@ export const App: React.FC = () => {
   const [focusOnInput, setFocusOnInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [currentPerson, setCurrentPerson] = useState<null | Person>(null);
+  const [isPersonEmpty, setIsPersonEmpty] = useState(true);
 
   const changeUser = (person: Person) => {
     setCurrentPerson(person);
@@ -46,11 +47,14 @@ export const App: React.FC = () => {
                 persons={peopleFromServer}
                 filterBy={inputValue}
                 onChangePerson={changeUser}
+                onPersonEmpty={(isPersonInList: boolean) =>
+                  setIsPersonEmpty(isPersonInList)
+                }
               />
             </div>
           </div>
         </div>
-        {false && (
+        {!isPersonEmpty && (
           <div
             className="
             notification
